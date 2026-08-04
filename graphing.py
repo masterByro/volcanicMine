@@ -1,8 +1,11 @@
 # graph_utils.py
 import json
-from SimResult import SimulationResult
-import matplotlib.pyplot as plt
 from collections import Counter
+
+import matplotlib.pyplot as plt
+
+from SimResult import SimulationResult
+
 
 def graph_stability(result: SimulationResult):
     """

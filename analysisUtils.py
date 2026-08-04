@@ -27,7 +27,7 @@ def find_best_early_warning_rule(
 
         data.append((feature, outcome))
 
-    thresholds = sorted(set(feature for feature, _ in data))
+    thresholds = sorted({feature for feature, _ in data})
 
     best = None
 
@@ -113,9 +113,9 @@ def find_best_rule_with_ab(
             "outcome": r["lowest_stability"] < target_stability,
         })
 
-    a_values = sorted(set(d["A"] for d in data))
-    b_values = sorted(set(d["B"] for d in data))
-    feature_values = sorted(set(d["feature"] for d in data))
+    a_values = sorted({d["A"] for d in data})
+    b_values = sorted({d["B"] for d in data})
+    feature_values = sorted({d["feature"] for d in data})
 
     best = None
 

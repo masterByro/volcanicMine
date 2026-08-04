@@ -1,7 +1,9 @@
+import math
 import random
+
 from rulesUtils import apply_action
 from SimResult import SimulationResult
-import math
+
 
 def simulate(A: int, B: int, C: int, STABILITY: int, rules: list) -> SimulationResult:
     isVerbose = True
@@ -18,9 +20,8 @@ def simulate(A: int, B: int, C: int, STABILITY: int, rules: list) -> SimulationR
     rand = random.randint(0, 1)
     for i in range(1, 271):
         for rule in rules:
-            if rule["time"] == i:
-                if rule["condition"](A, B, C, STABILITY):
-                    A, B, C = apply_action(rule["action"], A, B, C)
+            if rule["time"] == i and rule["condition"](A, B, C, STABILITY):
+                A, B, C = apply_action(rule["action"], A, B, C)
 
         # Update vent
         if i % 6 == 0:

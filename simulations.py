@@ -1,6 +1,6 @@
 from rules import RULES
-from utils import simulate
 from SimResult import SimulationResult
+from utils import simulate
 
 
 def simulate_all(initial_stability, sim_range: list[int]) -> list[SimulationResult]:

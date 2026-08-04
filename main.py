@@ -1,12 +1,18 @@
 import json
-from XpUtils import expected_boulder_rewards
+
 from analysisUtils import find_best_early_warning_rule, find_best_rule_with_ab
-from rules import RULES
+from graphing import (
+    graph_cumulative_stability,
+    graph_final_stability_distribution,
+    graph_stability,
+)
 from jsonUtils import save_results_json
-from simulations import simulate_all
-from graphing import graph_stability, graph_final_stability_distribution, graph_cumulative_stability
+from rules import RULES
 from SimResult import print_result
+from simulations import simulate_all
 from utils import simulate
+from XpUtils import expected_boulder_rewards
+
 A = 34
 B = 91
 C = 52

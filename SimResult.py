@@ -1,6 +1,6 @@
-from dataclasses import dataclass, asdict
-from typing import Optional
 import json
+from dataclasses import asdict, dataclass
+
 
 @dataclass
 class SimulationResult:
@@ -10,7 +10,7 @@ class SimulationResult:
     initial_stability: int
     lowest_stability: int
     final_stability: int
-    death_time: Optional[int]  # None if stability never reaches 0
+    death_time: int | None  # None if stability never reaches 0
 
     stability_changes: list[int]
     vent_changes: list[list[int]] | None

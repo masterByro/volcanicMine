@@ -20,7 +20,11 @@ def get_range(round: int) -> list[int]:
 
 def get_time_limit(round: int) -> int:
     return 300 if round == 1 else 255
-    
+
+def run_simulation(A, B, C, STABILITY, round, useRules: bool = True):
+    RULES = get_rules(round, useRules=useRules)
+    return simulate(A, B, C, STABILITY, RULES, time_limit=get_time_limit(round=round))
+
 def simulate_all(initial_stability, round: int, useRules: bool) -> list[SimulationResult]:
     results: list[SimulationResult] = []
     lower, upper = RANGES["START"]

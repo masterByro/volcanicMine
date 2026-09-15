@@ -17,21 +17,25 @@ from jsonUtils import save_results_json
 from SimResult import print_result
 from simulations import simulate_all
 from utils import simulate
+from simulations import run_simulation
 from XpUtils import expected_boulder_rewards
 
 STABILITY = 50
 round = 1
 useRules = True
+A = 50
+B = 50
+C = 50
 
 def main():
-    #result = simulate(A, B, C, STABILITY, RULES)
-    #print_result(result)
-    #graph_stability(result)
+    result = run_simulation(A, B, C, STABILITY, round, useRules)
+    print_result(result)
+    graph_stability(result)
 
-    results = simulate_all(STABILITY, round, useRules)
-    save_results_json(results, "simulation_results.json")
+    #results = simulate_all(STABILITY, round, useRules)
+    #save_results_json(results, "simulation_results.json")
     #graph_final_stability_distribution(results)
-    graph_cumulative_stability("simulation_results.json")
+    #graph_cumulative_stability("simulation_results.json")
     #find_best_early_warning_rule("simulation_results.json", num_changes=3, target_stability=10)
     #find_best_rule_with_ab("simulation_results.json", num_changes=3, target_stability=10)
     #plot_negative_change_fit_distribution("simulation_results.json", n=5)

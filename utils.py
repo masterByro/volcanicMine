@@ -17,37 +17,45 @@ def simulate(A: int, B: int, C: int, STABILITY: int, rules: list, time_limit: in
     vent_changes = []
     death_time = None
 
-    rand = random.randint(0, 1)
-    for i in range(1, time_limit + 1):
+    # Nothing changes state except rule times, vent ticks (every 6) and
+    # stability ticks (every 15), so only those timesteps need visiting
+    # instead of every single tick from 1..time_limit.
+    if time_limit >= 1 and STABILITY <= 0:
+        death_time = 1
+    elif time_limit >= 1:
+        rules_by_time: dict[int, list] = {}
         for rule in rules:
-            if rule["time"] == i and rule["condition"](A, B, C, STABILITY):
-                A, B, C = apply_action(rule["action"], A, B, C)
+            rules_by_time.setdefault(rule["time"], []).append(rule)
 
-        # Update vent
-        if i % 6 == 0:
-            A, B, C = update_vents(A, B, C)
+        event_times = set(rules_by_time)
+        event_times.update(range(6, time_limit + 1, 6))
+        event_times.update(range(15, time_limit + 1, 15))
 
+        rand = random.randint(0, 1)
+        for i in sorted(t for t in event_times if 1 <= t <= time_limit):
+            for rule in rules_by_time.get(i, ()):
+                if rule["condition"](A, B, C, STABILITY):
+                    A, B, C = apply_action(rule["action"], A, B, C)
 
-            if isVerbose:
-                vent_changes.append([A, B, C])
-            #print(f"time: {i}. STABILITY: {STABILITY}. A: {A}. B: {B}. C: {C}")
+            # Update vent
+            if i % 6 == 0:
+                A, B, C = update_vents(A, B, C)
 
+                if isVerbose:
+                    vent_changes.append([A, B, C])
 
-        # Update Stability
-        if i % 15 == 0:
+            # Update Stability
+            if i % 15 == 0:
                 change = calculate_stability(A, B, C) + rand
                 rand = 1 if rand == 0 else 0
                 stability_changes.append(change)
                 STABILITY += change
                 STABILITY = max(0, min(100, STABILITY))
                 lowest_stability = min(lowest_stability, STABILITY)
-                #print(f"time: {i}. change: {change} ")
 
-        if STABILITY <= 0:
-            death_time = i
-            break
-
-        i += 3
+                if STABILITY <= 0:
+                    death_time = i
+                    break
 
     # Create and return the simulation result
     return SimulationResult(

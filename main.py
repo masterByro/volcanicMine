@@ -21,18 +21,18 @@ from simulations import run_simulation
 from XpUtils import expected_boulder_rewards
 
 STABILITY = 50
-round = 1
+half = 1
 useRules = True
 A = 50
 B = 50
 C = 50
 
 def main():
-    result = run_simulation(A, B, C, STABILITY, round, useRules)
+    result = run_simulation(A, B, C, STABILITY, half, useRules)
     print_result(result)
     graph_stability(result)
 
-    #results = simulate_all(STABILITY, round, useRules)
+    #results = simulate_all(STABILITY, half, useRules)
     #save_results_json(results, "simulation_results.json")
     #graph_final_stability_distribution(results)
     #graph_cumulative_stability("simulation_results.json")

@@ -1,0 +1,10 @@
+B check
+Leave now if faster
+Fix B after B1 or B2 if needed. B's movement tells A. If A bad, fix after B1 or B2
+Good scenario: Mine B3 at 5:45, Fix B at B4. Blind B. C only if needed
+Bad scenario: Fix A? Or just blind B,C still
+B,C check if stab permits. Else out by 1:52 (or 1:12 with caps, b/c (+400pts))
+
+A fix. B check. Leave now if faster.
+Fix A,B as needed.
+A check and fix, blind B. C only if needed. OR skip A?

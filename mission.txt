@@ -1,0 +1,53 @@
+The player wants to know how to get the highest xp rates per hour in the Volcanic Mine.
+The Volcanic mine is a game in which the player mines a boulder for xp while trying to subdue the Volcano.
+First there is 30 seconds waiting for the game to begin.
+The game then begins with 10 minutes on the clock and a stability of 50. If the stability hits 0, the volcano blows up. The stability caps out at 100.
+
+Stability logic:
+There are 3 chambers, A, B and C. They are either blocked or unblocked. The player can block/unblock them by going up to them and 'capping'.
+There are 3 vents, A,B and C, and they have a status, which is a % between 0 and 100. When their corresponding chamber is blocked, the status goes up. When unblocked, it goes down.
+At the start of the game, they have a random status between  [30, 70]
+The status of a vent is unknown until the player checks it.
+The status of the vent updates every 6 seconds during the game. This is the rules for vent updates:
+  Update order:
+        1. C
+        2. B
+        3. A
+
+    Rules:
+        - All vents move 2 by default.
+        - A vent in the 41-59 range moves 1 instead.
+        - If A is in 41-59, B and C each move 1 less.
+        - If B is in 41-59, C moves 1 less.
+        - Movement is floored at 0.
+Every 15 seconds, the stability updates. It is based on the vent statuses, with the below logic:
+def vent_score(value: int) -> int:
+    return math.ceil((50 - abs(50 - value)) / 3)
+
+stability += -25 +  vent_score(A) +  vent_score(B) +  vent_score(C)
+
+After the 5 minute mark, the chamber statuses 'reset', becoming a new random number between [25, 75], and the player will need to check the vent in order to see each chambers value again. The mine stability does not reset however.
+The last stability update occurs when there is 45 seconds left on the clock. After that, the mine will not blow up.
+
+To keep the mine from blowing up, the player should cap the chambers to improve the vent status, in order to keep the volcano stability above 0.
+
+Mining and xp:
+The main source of xp in Volcanic Mine is mining the boulder. It starts in position 1 with 41 health. Every succesful mine deducts a health. After 41 succesful mines, it moves to position 2.
+This continues up to position 5, where it instead has 61 health instead.
+Mining it gives xp and points. See below for average points, xp, and time for each boulder.
+BOULDERS = [
+    {"stage": 1,"chance": 1/20, "health":40, "rolls": 2.0, "points": 144.66, "xp": 382.59, "time": 69.28, "xp_hr": 19880.54},
+    {"stage": 2,"chance": 1/12, "health":40,  "rolls": 3.333333333333333, "points": 214.43,  "xp": 504.32, "time": 69.28, "xp_hr": 26206.0},
+    {"stage": 3,"chance": 1/8, "health":40, "rolls": 5.0, "points": 301.64, "xp": 656.48, "time": 69.28, "xp_hr": 34112.7},
+    {"stage": 4,"chance": 1/5, "health":40, "rolls": 8.0, "points": 458.63, "xp": 930.36, "time": 69.28, "xp_hr": 48344.34},
+    {"stage": 5,"chance": 1/3, "health":60, "rolls": 20.0, "points": 1106.56, "xp": 2125.9, "time": 103.92, "xp_hr": 73645.5},
+]
+
+Capping gives 50 points. Player can cap up to 6 times per game.
+Checking vents gives 50 points per game. As there are 3 vents and they reset at 5 minute mark, thats a max of 6 vent checks possible.
+After completely mining boulder 5, a bonus 100 points is rewarded.
+Points are turned into xp after the player leaves the mine,at 3.895xp per point.
+
+So the problem is: How to maximise xp per hour from this minigame.
+
+There is already an existing simulation and logic. Feel free to re-write it/delete it as needed. Create a simulator that identifies different possible 

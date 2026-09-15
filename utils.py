@@ -5,7 +5,7 @@ from rulesUtils import apply_action
 from SimResult import SimulationResult
 
 
-def simulate(A: int, B: int, C: int, STABILITY: int, rules: list) -> SimulationResult:
+def simulate(A: int, B: int, C: int, STABILITY: int, rules: list, time_limit: int) -> SimulationResult:
     isVerbose = True
 
     initial_A = A
@@ -18,7 +18,7 @@ def simulate(A: int, B: int, C: int, STABILITY: int, rules: list) -> SimulationR
     death_time = None
 
     rand = random.randint(0, 1)
-    for i in range(1, 256):#271
+    for i in range(1, time_limit + 1):
         for rule in rules:
             if rule["time"] == i and rule["condition"](A, B, C, STABILITY):
                 A, B, C = apply_action(rule["action"], A, B, C)

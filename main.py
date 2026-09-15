@@ -14,28 +14,21 @@ from graphing import (
     graph_stability,
 )
 from jsonUtils import save_results_json
-from rules import RULES
 from SimResult import print_result
 from simulations import simulate_all
 from utils import simulate
 from XpUtils import expected_boulder_rewards
 
-A = 39
-B = 50
-C = 80
-STABILITY = 60
-RANGES = {
-    "START": [30, 70],
-    "SOLO_RESET": [25, 75],
-    "GROUP_RESET": [0, 100]
-}
+STABILITY = 50
+round = 1
+useRules = True
 
 def main():
     #result = simulate(A, B, C, STABILITY, RULES)
     #print_result(result)
     #graph_stability(result)
 
-    results = simulate_all(STABILITY, RANGES["SOLO_RESET"])
+    results = simulate_all(STABILITY, round, useRules)
     save_results_json(results, "simulation_results.json")
     #graph_final_stability_distribution(results)
     graph_cumulative_stability("simulation_results.json")

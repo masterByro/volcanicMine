@@ -1,0 +1,35 @@
+TO B1
+start to b1, via A and B check: 36
+fix A at start: 14
+direct: 14
+
+TO B2:
+fix A after B1: 39 ttf: 28
+fix B after B1: 48 ttf: 29
+low route: 11
+reg route: 7
+
+TO B3:
+fix A after B2: 26 ttf: 19
+fix B after B2: 35 ttf: 21 
+fix B after B2, stay E side: 29
+direct: 10
+
+AT B3:
+B3 A fix: 21 ttf:14
+
+TO B4:
+via A check, no path: 43
+via A, with path: 37
+direct: 15
++ grab boulder: 1
+
+AT B4:
+via rock: 30
+cia gas hole: 34
+fix C straight there: 28
+
+TO B5:
+flip B:19
+
+b4 grab boulder: 5

@@ -1,13 +1,24 @@
 # graph_utils.py
 import json
 from collections import Counter
+from pathlib import Path
 
+import matplotlib
 import matplotlib.pyplot as plt
 
 from SimResult import SimulationResult
 
 
-def graph_stability(result: SimulationResult):
+def _maybe_save_figure(output_path: str | None) -> None:
+    if output_path is None:
+        return
+
+    path = Path(output_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(path, dpi=150, bbox_inches="tight")
+
+
+def graph_stability(result: SimulationResult, output_path: str | None = None):
     """
     Graphs:
     - Stability over time
@@ -104,11 +115,14 @@ def graph_stability(result: SimulationResult):
     plt.legend()
 
     plt.tight_layout()
-    plt.show()
+    if output_path is None:
+        plt.show()
+    else:
+        _maybe_save_figure(output_path)
+        plt.close()
 
 
-
-def graph_final_stability_distribution(results: list[SimulationResult]):
+def graph_final_stability_distribution(results: list[SimulationResult], output_path: str | None = None):
     """
     Plots the distribution of final stability values.
 
@@ -140,11 +154,15 @@ def graph_final_stability_distribution(results: list[SimulationResult]):
     plt.grid(axis="y")
 
     plt.tight_layout()
-    plt.show()
+    if output_path is None:
+        plt.show()
+    else:
+        _maybe_save_figure(output_path)
+        plt.close()
 
 
 #Chance of Reaching At Least a Given Final Stability
-def graph_cumulative_stability(filename: str):
+def graph_cumulative_stability(filename: str, output_path: str | None = None):
     with open(filename, "r") as f:
         results = json.load(f)
 
@@ -168,6 +186,16 @@ def graph_cumulative_stability(filename: str):
     plt.figure(figsize=(10, 6))
     plt.plot(x, y, linewidth=2)
 
+    if 1 in x and len(y) > 1:
+        plt.annotate(
+            f"({1}, {y[1]:.1f})",
+            xy=(1, y[1]),
+            xytext=(8, 8),
+            textcoords="offset points",
+            fontsize=9,
+            bbox=dict(boxstyle="round,pad=0.2", fc="white", alpha=0.8),
+        )
+
     plt.title("Chance of Reaching At Least a Given Final Stability")
     plt.xlabel("Final Stability")
     plt.ylabel("% of Games")
@@ -175,4 +203,8 @@ def graph_cumulative_stability(filename: str):
     plt.ylim(0, 100)
     plt.grid(True)
 
-    plt.show()
+    if output_path is None:
+        plt.show()
+    else:
+        _maybe_save_figure(output_path)
+        plt.close()

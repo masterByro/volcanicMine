@@ -1,0 +1,123 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "run-full-series-predictor",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe",
+			"args": [
+				"-c",
+				"from analysisUtils import evaluate_full_series_predictors; out=evaluate_full_series_predictors('simulation_results.json'); print('BEST', out['best_model']); print('FORMULA', out['models'][out['best_model']]['formula'])"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "run-full-series-predictor-2",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe -c \"from analysisUtils import evaluate_full_series_predictors; out=evaluate_full_series_predictors('simulation_results.json'); print('BEST', out['best_model']); print('FORMULA', out['models'][out['best_model']]['formula'])\"",
+			"isBackground": false
+		},
+		{
+			"label": "run-full-series-predictor-script",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_full_series_eval.py",
+			"isBackground": false
+		},
+		{
+			"label": "run-full-series-predictor-script-2",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_full_series_eval.py",
+			"isBackground": false
+		},
+		{
+			"label": "run-two-negative-trigger-eval",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_two_negative_trigger_eval.py",
+			"isBackground": false
+		},
+		{
+			"label": "run-two-negative-trigger-eval-fair",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_two_negative_trigger_eval.py",
+			"isBackground": false
+		},
+		{
+			"label": "check-exact-counts",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _check_exact_counts.py",
+			"isBackground": false
+		},
+		{
+			"label": "check-exact-rate",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _check_exact_rate.py",
+			"isBackground": false
+		},
+		{
+			"label": "diagnose-zero-plateau-effect",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _diagnose_zero_plateau_effect.py",
+			"isBackground": false
+		},
+		{
+			"label": "run-chain-scope-eval",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_chain_scope_eval.py",
+			"isBackground": false
+		},
+		{
+			"label": "run-zero-semantics-eval",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_zero_semantics_eval.py",
+			"isBackground": false
+		},
+		{
+			"label": "run-decap-compare",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_decap_compare.py",
+			"isBackground": false
+		},
+		{
+			"label": "run-n-negative-eval",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_n_negative_eval.py",
+			"isBackground": false
+		},
+		{
+			"label": "run-live-helper-smoke",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_live_helper_smoke.py",
+			"isBackground": false
+		},
+		{
+			"label": "run-live-now",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _run_live_now.py",
+			"isBackground": false
+		},
+		{
+			"label": "find-best-linear-over-n",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _find_best_linear_over_n.py",
+			"isBackground": false
+		},
+		{
+			"label": "extract-n9-linear-coeffs",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _extract_n9_linear_coeffs.py",
+			"isBackground": false
+		},
+		{
+			"label": "find-best-linear-n-2-5",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _find_best_linear_n_2_to_5.py",
+			"isBackground": false
+		},
+		{
+			"label": "single-linear-n2-5",
+			"type": "shell",
+			"command": "C:/Users/byro0/AppData/Local/Programs/Python/Python313/python.exe _single_linear_model_n2_5.py",
+			"isBackground": false
+		}
+	]
+}

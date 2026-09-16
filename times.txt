@@ -19,7 +19,7 @@ Average = 6.72
 TO B1
 W stair to A vent: 11t run 20t lava
 A Vent to block: 10t then to B vent: 28t = 10+1+1+28=40
-A vent to unblock: 8t then to B vent: 26t = 37.44
+A vent to unblock: 8t then to B vent: 26t = 37.44t
 A fix average: 40+37.44 /2= 38.72
 A vent to B vent: 19t
 B vent to B1: 3t
@@ -74,7 +74,7 @@ TO B5:
 =6+2+5+8+3+2=26
 +=2t moving via rock
 
-b4 grab boulder: 5
+b4 grab rock: 5t
 
 
 

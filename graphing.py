@@ -1,5 +1,6 @@
 # graph_utils.py
 import json
+import math
 from collections import Counter
 from pathlib import Path
 
@@ -202,6 +203,122 @@ def graph_cumulative_stability(filename: str, output_path: str | None = None):
     plt.xlim(0, 100)
     plt.ylim(0, 100)
     plt.grid(True)
+
+    if output_path is None:
+        plt.show()
+    else:
+        _maybe_save_figure(output_path)
+        plt.close()
+
+
+def graph_game_result_summary(results: list[SimulationResult], output_path: str | None = None, completion_time_offset: float = 0):
+    if not results:
+        raise ValueError("results is empty")
+
+    positions = [result.boulder_position or "None" for result in results]
+    position_counts = Counter(positions)
+    ordered_positions = [position for position in ["None", "B1", "B2", "B3", "B4", "B5"] if position in position_counts]
+
+    final_stabilities = [result.final_stability for result in results]
+    points = [result.points for result in results]
+    xp = [result.xp for result in results]
+    xp_with_points = [result.xp_with_points for result in results if result.completion_time is not None]
+    completion_times = [completion_time_offset + result.completion_time for result in results if result.completion_time is not None]
+
+    plt.figure(figsize=(14, 12))
+
+    plt.subplot(3, 2, 1)
+    plt.hist(final_stabilities, bins=range(0, 102, 2), edgecolor="black")
+    plt.title("Full Game Final Stability")
+    plt.xlabel("Stability")
+    plt.ylabel("Simulations")
+    plt.xlim(0, 100)
+    plt.grid(axis="y")
+
+    plt.subplot(3, 2, 2)
+    plt.bar(ordered_positions, [position_counts[position] for position in ordered_positions])
+    plt.title("Final Boulder Position")
+    plt.xlabel("Position")
+    plt.ylabel("Simulations")
+    plt.grid(axis="y")
+
+    plt.subplot(3, 2, 3)
+    plt.hist(points, bins=30, edgecolor="black")
+    plt.title("Total Points")
+    plt.xlabel("Points")
+    plt.ylabel("Simulations")
+    plt.grid(axis="y")
+
+    plt.subplot(3, 2, 4)
+    plt.hist(xp, bins=30, edgecolor="black")
+    plt.title("Total XP")
+    plt.xlabel("XP")
+    plt.ylabel("Simulations")
+    plt.grid(axis="y")
+
+    plt.subplot(3, 2, 5)
+    if xp_with_points:
+        plt.hist(xp_with_points, bins=30, edgecolor="black")
+    plt.title("Completed XP With Points")
+    plt.xlabel("XP")
+    plt.ylabel("Completed Simulations")
+    plt.grid(axis="y")
+
+    plt.subplot(3, 2, 6)
+    if completion_times:
+        plt.hist(completion_times, bins=30, edgecolor="black")
+    plt.title("Completed Game Time")
+    plt.xlabel("Seconds")
+    plt.ylabel("Completed Simulations")
+    plt.grid(axis="y")
+
+    plt.tight_layout()
+    if output_path is None:
+        plt.show()
+    else:
+        _maybe_save_figure(output_path)
+        plt.close()
+
+
+def graph_full_game_deaths(
+    first_half: SimulationResult,
+    second_half_results: list[SimulationResult],
+    second_half_offset: float,
+    game_end_time: float | None = None,
+    last_stability_update: float | None = None,
+    output_path: str | None = None,
+):
+    death_times = []
+
+    if first_half.death_time is not None:
+        death_times.append(first_half.death_time)
+    else:
+        death_times.extend(
+            second_half_offset + result.death_time
+            for result in second_half_results
+            if result.death_time is not None
+        )
+
+    plt.figure(figsize=(12, 6))
+    if death_times:
+        x_limit = game_end_time or math.ceil(max(death_times))
+        bins = range(0, math.ceil(x_limit) + 16, 15)
+        plt.hist(death_times, bins=bins, edgecolor="black")
+    else:
+        plt.text(0.5, 0.5, "No deaths for this starter/sweep", ha="center", va="center", transform=plt.gca().transAxes)
+
+    plt.axvline(second_half_offset, color="black", linestyle="--", label="5 minute reset")
+    if last_stability_update is not None:
+        plt.axvline(last_stability_update, color="red", linestyle=":", label="last stability update")
+    if game_end_time is not None:
+        plt.axvline(game_end_time, color="gray", linestyle="--", label="game end")
+    plt.title("Deaths on Full Game Timeline")
+    plt.xlabel("Time (seconds)")
+    plt.ylabel("Deaths")
+    plt.xlim(0, game_end_time or None)
+    plt.grid(axis="y")
+    plt.legend()
+    plt.tight_layout()
 
     if output_path is None:
         plt.show()

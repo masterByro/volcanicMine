@@ -15,6 +15,16 @@ class SimulationResult:
     stability_changes: list[int]
     vent_changes: list[list[int]] | None
 
+    # Player action tracking (only populated when rules include travel/mining phases)
+    vents_checked: int = 0
+    flips: int = 0
+    boulder_position: str | None = None
+    boulder_health: float | None = None
+    points: float = 0.0
+    xp: float = 0.0
+    xp_with_points: float = 0.0
+    completion_time: float | None = None
+
     def to_dict(self):
         return asdict(self)
 

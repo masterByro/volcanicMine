@@ -18,12 +18,17 @@ class SimulationResult:
     # Player action tracking (only populated when rules include travel/mining phases)
     vents_checked: int = 0
     flips: int = 0
+    player_position: str | None = None
+    player_position_delay: float = 0.0
     boulder_position: str | None = None
     boulder_health: float | None = None
     points: float = 0.0
     xp: float = 0.0
     xp_with_points: float = 0.0
+    exit_start_time: float | None = None
     completion_time: float | None = None
+    b5_completed: bool = False
+    b5_completed_time: float | None = None
 
     def to_dict(self):
         return asdict(self)

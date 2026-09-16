@@ -17,7 +17,7 @@ Cap: =3+1+1+3=8
 Average = 6.72
 
 TO B1
-W stair to A vent: 11t run 20t lava
+W stair to A vent: 31t
 A Vent to block: 10t then to B vent: 28t = 10+1+1+28=40
 A vent to unblock: 8t then to B vent: 26t = 37.44t
 A fix average: 40+37.44 /2= 38.72
